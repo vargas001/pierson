@@ -1,0 +1,107 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+body{
+  background-image: url("../sistema/img/fondo.jpg");
+}
+.container {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  
+}
+
+.login {
+  background-color: #fff;
+  width: 300px;
+  padding: 50px 40px;
+  margin: 100px auto;
+  -webkit-box-shadow: 0px 0px 2px gray,
+    0px 0px 0px 5px #ecf0f3,
+    8px 8px 15px #a7aaaf,
+    -8px -8px 15px white;
+  box-shadow: 0px 0px 2px gray,
+    8px 8px 15px #a7aaaf,
+    -8px -8px 15px white;
+  border-radius: 50px 0px;
+}
+
+.logo {
+  width: 100px;
+  height: 100px;
+  display: block;
+  margin: -120px auto;
+  border-radius: 50%;
+  -webkit-box-shadow: 0px 0px 2px gray,
+    0px 0px 0px 5px #ecf0f3,
+    8px 8px 15px #a7aaaf,
+    -8px -8px 15px white;
+  box-shadow: 0px 0px 2px gray,
+    0px 0px 0px 5px #ecf0f3,
+    8px 8px 15px #a7aaaf,
+    -8px -8px 15px white;
+  overflow: hidden;
+  margin-bottom: 50px;
+}
+
+.logo img {
+  width: 100%;
+}
+
+.grupo {
+  width: 100%;
+  padding: 10px;
+  -webkit-box-shadow: inset 2px 2px 3px #cbced1,
+    inset -8px -8px 8px white;
+  box-shadow: inset 2px 2px 3px #515152,
+    inset -8px -8px 8px white;
+  border-radius: 10px;
+  margin-top: 18px;
+  margin-bottom: 10px;
+}
+
+.grupo input {
+  border: none;
+  outline: none;
+}
+
+.btn {
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  background-color: brown;
+  padding: 10px;
+  -webkit-box-shadow: 0px 0px 2px #030000,
+    0px 0px 1px #030000;
+  box-shadow: 0px 0px 2px #030000,
+    0px 0px 1px #030000;
+  cursor: pointer;
+  color: white;
+  margin-top: 30px;
+}
+
+.registrar {
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+a {
+  text-decoration: none;
+  margin: 15px;
+}
+
+.alert{
+  font-size: 16px;
+  text-align: center;
+}
+
+
+/*Estilos para registrar usuarios*/

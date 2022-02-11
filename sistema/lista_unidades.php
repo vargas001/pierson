@@ -1,0 +1,118 @@
+<?php include_once "includes/header.php"; ?>
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+	<!-- Page Heading -->
+	<div class="d-sm-flex align-items-center justify-content-between mb-4">
+		<h1 class="h3 mb-0 text-gray-800">Listado de Unidades</h1>
+		<a href="nueva_orden.php" class="btn btn-primary">Nuevo</a>
+	</div>
+	<?php
+	if(isset($_SESSION['success'])){
+		?>
+		<div class="alert alert-success fade in">
+			<a href="#" class="close" data-dismiss="alert">&times;</a>
+			<strong>¡CORRECTO!</strong> <?php echo $_SESSION['success']; ?>
+		</div>
+		<?php
+	}
+	unset($_SESSION['success']);
+	if(isset($_SESSION['error'])){
+		?>
+		<div class="alert alert-danger fade in">
+			<a href="#" class="close" data-dismiss="alert">&times;</a>
+			<strong>¡ERROR!</strong> <?php echo $_SESSION['error']; ?>
+		</div>
+		<?php
+	}
+	unset($_SESSION['error']);
+	?>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="table-responsive">
+				<table class="table table-striped table-bordered" id="table">
+					<thead class="thead-dark">
+						<tr>
+							<th>OS</th>
+							<th>SEGURO</th>
+							<th>FECHA PROMESA</th>
+							<th>FECHA T&Eacute;RMINO</th>
+							<th>TIPO VALUACI&Oacute;N</th>
+							<th>N° ESTACI&Oacute;N</th>
+							<?php if ($_SESSION['rol'] == 1 || $_SESSION['user'] == 'Raul' || $_SESSION['user'] == 'JoseL') { ?>
+								<th>ACCIONES</th>
+							<?php } ?>
+						</tr>
+					</thead>
+					<tbody>
+						<?php
+						include "../conexion.php";
+						$query = mysqli_query($conexion, "SELECT * FROM registro_unidad  ORDER BY orden_servicio DESC");
+						$result = mysqli_num_rows($query);
+						if ($result > 0) {
+							while ($data = mysqli_fetch_assoc($query)) { 
+								$os =  $data['orden_servicio'];?>
+								<tr>
+									<td><?php echo $data['orden_servicio']; ?></td>
+									<td><?php echo $data['seguro_particular']; ?></td>
+									<?php
+									include "../conexion.php";
+									$query2 = mysqli_query($conexion, "SELECT * FROM valuacion where orden_servicio = '$os' ORDER BY orden_servicio DESC");
+									$result2 = mysqli_num_rows($query2);
+									if ($result2 > 0) {
+										while ($data2 = mysqli_fetch_assoc($query2)) { ?>
+											<td><?php echo $data2['fecha_promesa']; ?></td>
+											<td><?php echo $data2['fecha_termino']; ?></td>
+											<td><?php echo $data2['tipo_valuacion']; ?></td>
+											<?php
+											include "../conexion.php";
+											$query3 = mysqli_query($conexion, "SELECT * FROM taller where orden_servicio = '$os' ORDER BY orden_servicio DESC");
+											$result3 = mysqli_num_rows($query3);
+											if ($result3 > 0) {
+												while ($data3 = mysqli_fetch_assoc($query3)) { 
+													?>
+													<td><?php echo $data3['n_estacion']; ?></td>
+													<?php if ($_SESSION['rol'] == 1) { ?>
+														<td>
+															<a href="detalles_orden2.php?orden_servicio=<?php echo $data['orden_servicio']; ?>" class="btn btn-primary"><i class='fas fa-folder-open'></i></a>
+															<a href="editar_orden.php?orden_servicio=<?php echo $data['orden_servicio']; ?>" class="btn btn-success"><i class='fas fa-edit'></i></a>
+															<form action="eliminar_unidad.php?id=<?php echo $data['id']; ?>" method="post" class="confirmar d-inline">
+																<button class="btn btn-danger" type="submit"><i class='fas fa-trash-alt'></i> </button>
+															</form>
+															<a href="detalles_encuesta.php?orden_servicio=<?php echo $data['orden_servicio']; ?>" class="btn btn-primary"><i class='fas fa-eye'></i></a>
+														</td>
+													<?php }elseif ($_SESSION['user'] == 'Raul' && isset($data2['fecha_termino']) && !isset($data2['fecha_entrega']) || $_SESSION['user'] == 'JoseL' && isset($data2['fecha_termino']) && !isset($data2['fecha_entrega'])) { ?>
+														<td>
+															<a href="encuesta.php?orden_servicio=<?php echo $data['orden_servicio']; ?>" class="btn btn-primary"><i class='fas fa-pencil-alt'></i></a>
+														</td>
+													<?php }else{ ?>
+														<td>
+															<a href="detalles_encuesta.php?orden_servicio=<?php echo $data['orden_servicio']; ?>" class="btn btn-primary"><i class='fas fa-eye'></i></a>
+														</td>
+													<?php }?>
+												</tr>
+												<?php
+											}
+										}
+									}
+								}
+							}
+						} 
+						?>
+					</tbody>
+
+				</table>
+			</div>
+
+		</div>
+	</div>
+
+	</div>
+	<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->
+
+
+<?php include_once "includes/footer.php"; ?>
